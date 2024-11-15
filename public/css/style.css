@@ -1,23 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Cormorant:wght@700&display=swap');
 body {
-    font-size: 12pt;
+    font-size: 12pt; /* höj*/
 }
 
-p {
-    color: red;
-}
+
 
 h1 {
     font-family: 'Agbalumo';
     font-size: 36pt;
 }
 main, header, footer, nav ul {
-    max-width: 40rem;
+    /* max-width: 40rem; jag kommenterade bort pga burgarna hamna på nya rader */
     margin: 0 auto 0 auto;
 }
+
 main {
     background-color: bisque;
 }
+    
+  
+    
+
 
 /* nav ul li {
     display: inline-block;
@@ -61,4 +64,22 @@ nav li {
 .Master {
     color: green;
     font-weight: bold;
+}
+
+.allergies {
+    color: ff5500;
+}
+#allergy1 {
+    text-transform: uppercase;
+}
+#allergy2 {
+    text-transform: uppercase;
+}
+#allergy3 {
+    text-transform: uppercase;
+}
+
+#burgersection {
+    background-color: #000000;
+    color: white;
 }

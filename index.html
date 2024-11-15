@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en">
-   <head>
+   <head><link rel="stylesheet" type="text/css" href="public/css/style.css">
        <title>Credit card burgers</title>
        <meta charset="utf-8"/>
    </head>
@@ -11,30 +11,34 @@
         </header>
         <nav>Menu Items</nav>
         <main>
-            <section>
+            <section id="burgersection">
         
                 <h3>Burgers</h3>
                 <p><i>This is where you choose a burger</i></p>
                 <div style="display: inline-block">
-                <p>Burger 1</p> 
-                <img src="https://i.pinimg.com/736x/0f/07/8c/0f078c8138ac3d583b6b1cfe3d325cdc.jpg" alt="Span" title="Burger 1" style="width: 200px">
-                <p><i>possible side-effects</i></p>
-                <ul>
-                    <li>Anxiety</li>
-                    <li>Nauscia</li>
-                    <li>Death</li>
-                </ul>
-                <p>Contains gluten and lactose</p>
+                    <p>Burger 1</p> 
+                        <img src="https://i.pinimg.com/736x/0f/07/8c/0f078c8138ac3d583b6b1cfe3d325cdc.jpg" alt="Span" title="Burger 1" style="width: 200px">
+                    <p><i>possible side-effects</i></p>
+                    <ul>
+                        <li>Anxiety</li>
+                        <li>Nauscia</li>
+                        <li>Death</li>
+                    </ul>
+                    <section class="allergies">
+                    <p>Contains<span id ="allergy1">gluten and lactose </span></p>
+                    </section>
                 </div>
                 <div style="display: inline-block">
-                <p>Burger 2</p>
-                <img src="https://static1.businessinsider.com/image/51bb7442ecad04b71d00002b/a-disgusting-9-patty-burger-from-a-spoof-ad-is-now-banned-from-wendys.jpg" alt="Span" title="Burger 1" style="width: 200px">
-                <ul>
-                    <li>Republican sympathies</li>
-                    <li>sex-realted problems</li>
-                    <li>Death</li>
-                </ul>
-                <p>Contains gluten and lactose</p>
+                 <p>Burger 2</p>
+                 <img src="https://static1.businessinsider.com/image/51bb7442ecad04b71d00002b/a-disgusting-9-patty-burger-from-a-spoof-ad-is-now-banned-from-wendys.jpg" alt="Span" title="Burger 1" style="width: 200px">
+                 <ul>
+                      <li>Republican sympathies</li>
+                       <li>sex-realted problems</li>
+                      <li>Death</li>
+                  </ul>
+                 <section class="allergies">
+                      <p>Contains <span id ="allergy2">gluten not lactose</span></p>
+            </section>
                 </div>  
                 <div style="display: inline-block">
                 <p>Burger 3</p>
@@ -44,7 +48,9 @@
                     <li>Nauscia</li>
                     <li>Death</li>
                 </ul>
-                <p>Contains gluten and lactose</p>
+                <section class="allergies">
+                    <p>Contains <span id ="allergy3">gluten and lactose</span></p>
+                    </section>
                 </div>
             </section>
             <section id="contact">
@@ -73,9 +79,10 @@
                     </p>
                     <p>
                         <label for="street number">Street number</label><br>
-                        <input type="text" id="street number" name="strnum" required="required" placeholder="street number">
+                        <input type="number" id="street number" name="strnum" required="required" placeholder="street number">
                     </p>
                     <p>
+                    Pick a gender <br>
                     <label>
                        <input type="radio" name="gender" value="Man" checked="checked">
                         Man
@@ -85,7 +92,7 @@
                          Woman
                     </label></br>
                     <label>
-                        <input type="radio" name="gender" value="other">
+                        <input type="radio" name="gender" value="Other">
                          other
                     </label></br>
                     <label>
@@ -114,6 +121,6 @@
         </main>
         <footer>
             End notes
-        </footer
+        </footer>
     </body>
 </html>
