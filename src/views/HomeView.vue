@@ -17,6 +17,19 @@ import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 
 const socket = io("localhost:3000");
+//object constructor function
+function MenuItem(pName, imgUrl, kcal, isGluten, isLactose) {
+  this.productName = pName;
+  this.imgageUrl = imgUrl;
+  this.kcal = kcal;
+  this.isGluten = isGluten;
+  this.isLactose = isLactose;
+}
+const burgersList = [
+  new MenuItem("Burger1", "url1", 300, false, false),
+  new MenuItem("Burger2", "url2", 400, true, true),
+  new MenuItem("Burger3", "url3", 7000, true, true),
+];
 
 export default {
   name: 'HomeView',
@@ -47,6 +60,7 @@ export default {
     }
   }
 }
+console.log(burgersList);
 </script>
 
 <style>
