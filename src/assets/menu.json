@@ -1,21 +1,23 @@
 [{
-    "productName": "Veggie Bliss", 
+    "productName": "Disgusting Burger", 
     "kcal": 500, 
-    "imageUrl": "https://images-bonnier.imgix.net/files/ifo/production/20220412084608/Kødfri-burger-1.jpg?auto=compress,format&w=1024%201024w",
+    "imageUrl": "https://i.pinimg.com/736x/0f/07/8c/0f078c8138ac3d583b6b1cfe3d325cdc.jpg",
     "isLactose": false, 
-    "isGluten": false
+    "isGluten": false,
+    "sideEffects": ["Nauscia", "Death"]
 },
 {
-    "productName": "Veggie Bliss", 
+    "productName": "The American Dream", 
     "kcal": 500, 
-    "imageUrl": "https://images-bonnier.imgix.net/files/ifo/production/20220412084608/Kødfri-burger-1.jpg?auto=compress,format&w=1024%201024w",
-    "isLactose": false, 
-    "isGluten": false
+    "imageUrl": "https://static1.businessinsider.com/image/51bb7442ecad04b71d00002b/a-disgusting-9-patty-burger-from-a-spoof-ad-is-now-banned-from-wendys.jp",
+    "isLactose": true, 
+    "isGluten": false,
+    "sideEffects":["Republican sympathies", "Sex-related problems"]
 },
 {
-    "productName": "Veggie Bliss", 
+    "productName": "Better Than It Looks Burger", 
     "kcal": 500, 
-    "imageUrl": "https://images-bonnier.imgix.net/files/ifo/production/20220412084608/Kødfri-burger-1.jpg?auto=compress,format&w=1024%201024w",
-    "isLactose": false, 
-    "isGluten": false
+    "imageUrl": "https://www.thescottishsun.co.uk/wp-content/uploads/sites/2/2017/06/nintchdbpict000328367792.jpg?w=1980",
+    "isLactose": true, 
+    "isGluten": true
 }]

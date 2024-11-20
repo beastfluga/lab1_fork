@@ -1,3 +1,5 @@
+
+
 <template>
 
 <header>
@@ -15,6 +17,7 @@
                       v-bind:burger="burger" 
                       v-bind:key="burger.name"/>
               
+                      
             </section>
               <div id="map" v-on:click="addOrder">
               click here
@@ -94,21 +97,27 @@
 <script>
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
+import menu from '../assets/menu.json'
 
 const socket = io("localhost:3000");
 //object constructor function
-function MenuItem(productName, imageUrl, kcal, isGluten, isLactose) {
+function MenuItem(productName, imageUrl, kcal, isGluten, isLactose, sideEffects) {
   this.productName = productName;
   this.imageUrl = imageUrl;
   this.kcal = kcal;
   this.isGluten = isGluten;
   this.isLactose = isLactose;
+  this.sideEffects = sideEffects;
 }
 const burgersList = [
   new MenuItem("Burger1", "https://i.pinimg.com/736x/0f/07/8c/0f078c8138ac3d583b6b1cfe3d325cdc.jpg", 300, false, false),
   new MenuItem("Burger2", "https://static1.businessinsider.com/image/51bb7442ecad04b71d00002b/a-disgusting-9-patty-burger-from-a-spoof-ad-is-now-banned-from-wendys.jpg", 400, true, true),
   new MenuItem("Burger3", "https://www.thescottishsun.co.uk/wp-content/uploads/sites/2/2017/06/nintchdbpict000328367792.jpg?w=1980", 7000, true, false),
 ];
+
+const newburgersList = [
+  ...menu
+]
 
 export default {
   name: 'HomeView',
@@ -117,7 +126,7 @@ export default {
   },
   data: function () {
     return {
-      burgers: burgersList
+      burgers: newburgersList
 
     }
   },
@@ -148,7 +157,7 @@ export default {
   }
   @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Cormorant:wght@700&display=swap');
 body {
-    font-size: 17pt;
+    font-size: 20pt;
 }
 
 
@@ -247,6 +256,9 @@ section > div{
     grid-template-columns: repeat(5, 300px);
     width: 100%; /* Fyll hela skärmen */
     
+}
+#contact {
+ 
 }
 /*
 #burgerdiv {
