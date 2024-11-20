@@ -1,3 +1,4 @@
+/*
 @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Cormorant:wght@700&display=swap');
 body {
     font-size: 17pt;
@@ -13,7 +14,7 @@ section > h3 > * {
     color:red;
 }
 main, header, footer, nav ul {
-    /* max-width: 40rem; jag kommenterade bort pga burgarna hamna på nya rader */
+     max-width: 40rem; jag kommenterade bort pga burgarna hamna på nya rader 
     margin: 0 auto 0 auto;
 }
 
@@ -30,7 +31,7 @@ main {
     background-color: grey;
     padding: 1em;
     margin: 1em;
-} */
+} 
 
 header {
     background-image: url("https://s3.amazonaws.com/piggy-blog/wp-content/uploads/2020/04/14211808/image-1.jpg");
@@ -120,3 +121,4 @@ section > div{
     padding: 20px;
     font-size: 150%;
 }
+*/
