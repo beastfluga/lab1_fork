@@ -26,53 +26,9 @@
             <section id="contact">
                 <h3>Customer information</h3>
                 <form>
-                    <p>
-                        <label for="firstname">First</label><br>
-                        <input type="text" id="firstname" name="fn" required="required" placeholder="First name">
-                    </p>
-                    <p>
-                        <label for="lastname">Last</label><br>
-                        <input type="text" id="lastname" name="ln" placeholder="Last name">
-                    </p>
-                    <p>
-                        <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
-                    </p>
-                    <p>
-                        <label for="Account number">Account number</label><br>
-                        <input type="text" id="Account number" name="ln" placeholder="ex: 1100 8765 099">
-                    </p>
-                    <label for="Clearing number">Clearing number</label><br>
-                        <input type="text" id="Clearing number" name="ln" placeholder="ex: 110085">
-                    <p>
-                        <label for="street">Street name</label><br>
-                        <input type="text" id="street" name="strt" required="required" placeholder="street name">
-                    </p>
-                    <p>
-                        <label for="street number">Street number</label><br>
-                        <input type="number" id="street number" name="strnum" required="required" placeholder="street number">
-                    </p>
-                    <p>
-                    Pick a gender <br>
-                    <label>
-                       <input type="radio" name="gender" value="Man" checked="checked">
-                        Man
-                    </label></br>
-                    <label>
-                        <input type="radio" name="gender" value="Woman">
-                         Woman
-                    </label></br>
-                    <label>
-                        <input type="radio" name="gender" value="Other">
-                         other
-                    </label></br>
-                    <label>
-                        <input type="radio" name="gender" value="None of your business">
-                         None of your business
-                    </label></br>
-                    </p>
-                    <p>
+                  <p>
                         <label for="recipient">Recipient</label>
-                        <select id="recipient" name="rcp">
+                        <select id="recipient" v-model="rcp">
                             <option>Credit card (recommended)</option>
                             <option>Master card</option>
                             <option>Nature</option>
@@ -81,9 +37,57 @@
                             <option>Metal objects and/or coins</option>
                         </select>
                      </p>
+                    <p>
+                        <label for="firstname">First name</label><br>
+                        <input type="text" id="firstname" v-model="fn" required="required" placeholder="First name">
+                    </p>
+                    <p>
+                        <label for="lastname">Last name</label><br>
+                        <input type="text" id="lastname" v-model="ln" placeholder="Last name">
+                    </p>
+                    <p>
+                        <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
+                    </p>
+                    <p v-if="rcp == 'Credit card (recommended)' || rcp == 'Master card'">
+                        <label for="Account number">Account number</label><br>
+                        <input type="text" id="Account number" v-model="an" placeholder="ex: 1100 8765 099">
+                    </p>
+                    <p v-if="rcp == 'Credit card (recommended)' || rcp == 'Master card'">
+                    <label for="Clearing number">Clearing number</label><br>
+                        <input type="text" id="Clearing number" v-model="cn" placeholder="ex: 110085">
+                    </p>
+                    <p>
+                        <label for="street">Street name</label><br>
+                        <input type="text" id="street" v-model="strt" required="required" placeholder="street name">
+                    </p>
+                    <p>
+                        <label for="street number">Street number</label><br>
+                        <input type="number" id="street number" v-model="strnum" required="required" placeholder="street number">
+                    </p>
+                    <p>
+                    Pick a gender <br>
+                    <label>
+                       <input type="radio" v-model="gender" value="Man" checked="checked">
+                        Man
+                    </label></br>
+                    <label>
+                        <input type="radio" v-model="gender" value="Woman">
+                         Woman
+                    </label></br>
+                    <label>
+                        <input type="radio" v-model="gender" value="Other">
+                         other
+                    </label></br>
+                    <label>
+                        <input type="radio" v-model="gender" value="None of your business">
+                         None of your business
+                    </label></br>
+                    </p>
+                    Hello, {{this.fn}}!
+                   
                 </form>
             </section>
-                <button type="submit" class="button">
+                <button type="submit" class="button" v-on:click="getInfo(key)">Klart">
                     <img src="https://www.whitehouse.gov/wp-content/uploads/2021/01/33_harry_s_truman.jpg"
                         style="width: 70px; height: 70px; vertical-align: middle;">
                     Send
@@ -126,7 +130,17 @@ export default {
   },
   data: function () {
     return {
-      burgers: newburgersList
+      burgers: newburgersList,
+      rcp: 'Credit card (recommended)',
+      ln: '',
+      fn: '',
+      an: '',
+      cn: '',
+      strt: '',
+      strnum: '',
+      gender: '',
+
+
 
     }
   },
@@ -143,6 +157,16 @@ export default {
                                 orderItems: ["Beans", "Curry"]
                               }
                  );
+    },
+    getInfo: function() {
+      console.log("method of payment:", this.rcp, "\n",
+      "Last name:", this.ln, "\n", 
+      "First name:", this.fn, "\n",
+      "Account number:", this.an, "\n", 
+      "Clearing number:", this.cn, "\n", 
+      "Strret", this.strt, "\n",
+      "Street number:", this.strnum, "\n",
+      "Gendder:", this.gender)
     }
   }
 }
@@ -236,7 +260,7 @@ main > section{
     border: 2px double white;
 }
 button{
-    margin: 30px;
+    margin: 50px;
 }
 .button:hover{
     background-color: blueviolet;
@@ -258,8 +282,29 @@ section > div{
     
 }
 #contact {
+  font-size: 40px;
+  
  
 }
+input[type="text"],
+input[type="email"],
+input[type="number"]
+ {
+  height: 40px;
+  width: 200px;
+}
+select  {
+  height: 40px;
+  width: 200px;
+  margin-left: 20px;
+}
+form {
+  margin-left: 30px;
+}
+input::placeholder {
+  font-size: 20px;
+}
+
 /*
 #burgerdiv {
     display: grid;

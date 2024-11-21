@@ -39,7 +39,6 @@ export default {
     padding: 20px;
     text-align: left;
     align-items: center;
-    grid-template-rows: 1fr auto; 
    
 }
 
