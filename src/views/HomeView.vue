@@ -83,7 +83,7 @@
                          None of your business
                     </label></br>
                     </p>
-                    Hello, {{this.fn}}!
+                    Todays worst customer: {{this.fn}}!
                    
                 </form>
             </section>
@@ -95,6 +95,9 @@
             </main>
             <footer>
                 End notes
+                <p>Reviews:</p>
+                <p>Irma Hansson: <i>This is not a scam and the staff is very nice</i></p>
+                <p>Anna Kirkman: <i>Not a scam</i></p>
             </footer>
 </template>
 
