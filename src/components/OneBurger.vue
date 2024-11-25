@@ -15,6 +15,9 @@
                 </p>
                 
             </section>
+            <button class="orderButton" v-on:click="AddBurger">Add item (+1)</button>
+            <button class="orderButton" v-on:click="SubtractBurger">Subtract item (-1)</button>
+            <p v-if="amountOrdered>0"><i>Amount:</i>{{ amountOrdered }}</p>
     </div>
 </template>
 
@@ -23,8 +26,34 @@ export default {
   name: 'OneBurger',
   props: {
     burger: Object
+  },
+  data: function () {
+    return {
+    amountOrdered: 0,
+    };
+  },
+  methods: {
+    AddBurger: function () {
+      this.amountOrdered +=1;
+      this.$emit('orderedBurger', { name: this.burger.name,
+                                    amount: this.amountOrdered
+                                  }
+     
+
+      );
+      console.log(burger.name);
+    
+    },
+    SubtractBurger: function () {
+      if(this.amountOrdered > 0) {
+        this.amountOrdered -=1;
+      }
+      
+
+    }
   }
-}
+};
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -57,6 +86,19 @@ export default {
 .allergies {
     font-weight: bold;
     text-transform: uppercase;
+}
+
+.orderButton {
+    width: 120px; 
+    height: 80px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    
+}
+.orderButton:hover{
+    background-color: blueviolet;
+    cursor: pointer;
 }
 
 

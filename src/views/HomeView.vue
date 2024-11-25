@@ -10,21 +10,27 @@
         <main>
           <div>
             <h1>Burgers</h1>
+            
+            {{ }}    
+              
             <section id="burgersection">
              
               
               <Burger v-for="burger in burgers"
                       v-bind:burger="burger" 
-                      v-bind:key="burger.name"/>
-              
-                      
+                      v-bind:key="burger.name"
+                      v-on:orderedBurger="addToOrder($event)"/>
+                
             </section>
-              <div id="map" v-on:click="addOrder">
-              click here
-              </div>
+              
           </div>
+          <section id="mapSection">
+            <div id="map" v-on:click="addOrder">
+              click here
+            </div>
+          </section>  
             <section id="contact">
-                <h3>Customer information</h3>
+                <h3>Give us control</h3>
                 <form>
                   <p>
                         <label for="recipient">Recipient</label>
@@ -87,7 +93,7 @@
                    
                 </form>
             </section>
-                <button type="submit" class="button" v-on:click="getInfo(key)">Klart">
+                <button type="submit" class="button" v-on:click="getInfo(key)">
                     <img src="https://www.whitehouse.gov/wp-content/uploads/2021/01/33_harry_s_truman.jpg"
                         style="width: 70px; height: 70px; vertical-align: middle;">
                     Send
@@ -98,6 +104,7 @@
                 <p>Reviews:</p>
                 <p>Irma Hansson: <i>This is not a scam and the staff is very nice</i></p>
                 <p>Anna Kirkman: <i>Not a scam</i></p>
+                <p>Teodor Torkelsson: <i>Woke up feeling dangerous, The American Dream is the best burger in the business</i></p>
             </footer>
 </template>
 
@@ -105,6 +112,7 @@
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 import menu from '../assets/menu.json'
+import OneBurger from '../components/OneBurger.vue';
 
 const socket = io("localhost:3000");
 //object constructor function
@@ -142,16 +150,22 @@ export default {
       strt: '',
       strnum: '',
       gender: '',
+      orderedBurgers: '',
+
 
 
 
     }
   },
   methods: {
+    addToOrder: function (event) {
+  this.orderedBurgers[event.name] = event.amount;
+},
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
     addOrder: function (event) {
+     
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
                     y: event.currentTarget.getBoundingClientRect().top};
       socket.emit("addOrder", { orderId: this.getOrderNumber(),
@@ -160,6 +174,8 @@ export default {
                                 orderItems: ["Beans", "Curry"]
                               }
                  );
+
+                 
     },
     getInfo: function() {
       console.log("method of payment:", this.rcp, "\n",
@@ -167,7 +183,7 @@ export default {
       "First name:", this.fn, "\n",
       "Account number:", this.an, "\n", 
       "Clearing number:", this.cn, "\n", 
-      "Strret", this.strt, "\n",
+      "Strret:", this.strt, "\n",
       "Street number:", this.strnum, "\n",
       "Gendder:", this.gender)
     }
@@ -177,10 +193,16 @@ export default {
 </script>
 
 <style>
+  #mapSection {
+    width: 500px;
+    height: 400px;
+    overflow: scroll;
+
+  }
   #map {
-    width: 300px;
-    height: 300px;
-    background-color: red;
+    width: 1920px;
+    height: 1078px;
+    background: url("/img/polacks.jpg");
   }
   @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Cormorant:wght@700&display=swap');
 body {
@@ -286,8 +308,10 @@ section > div{
 }
 #contact {
   font-size: 40px;
-  
- 
+  margin: 20px;
+}
+section > h3 {
+  margin: 20px;
 }
 input[type="text"],
 input[type="email"],
@@ -295,6 +319,7 @@ input[type="number"]
  {
   height: 40px;
   width: 200px;
+  font-size: 22px;
 }
 select  {
   height: 40px;
