@@ -16,8 +16,8 @@
                 
             </section>
             <button class="orderButton" v-on:click="AddBurger">Add item (+1)</button>
-            <button class="orderButton" v-on:click="SubtractBurger">Subtract item (-1)</button>
-            <p v-if="amountOrdered>0"><i>Amount:</i>{{ amountOrdered }}</p>
+            <button class="orderButton" v-on:click="SubtractBurger" v-if="amountOrdered>0">Subtract item (-1)</button>
+            <p><i>Amount:</i>{{ amountOrdered }}</p>
     </div>
 </template>
 
@@ -34,19 +34,24 @@ export default {
   },
   methods: {
     AddBurger: function () {
+
       this.amountOrdered +=1;
-      this.$emit('orderedBurger', { name: this.burger.name,
+      this.$emit('updatedAmount', { name:this.burger.productName,
                                     amount: this.amountOrdered
                                   }
      
 
       );
-      console.log(burger.name);
+     
     
     },
     SubtractBurger: function () {
       if(this.amountOrdered > 0) {
         this.amountOrdered -=1;
+        this.$emit('updatedAmount', { name: this.name,
+                                    amount: this.amountOrdered
+                                  }
+                                );
       }
       
 

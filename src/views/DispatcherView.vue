@@ -2,15 +2,39 @@
     <div id="orders">
       <div id="orderList">
         <div v-for="(order, key) in orders" v-bind:key="'order'+key">
-          #{{ key }}: {{ order.orderItems.join(", ") }}
+          #{{ key }}: <br>
+          <b>Personal info:</b>
+          <div v-for="(value, info) in order.orderInfo" v-bind:key="'info'+value">
+            {{ info }}: {{ value }}
+          </div>
+          
+          <b>Burger info:</b>
+          <div v-for="(count, burger) in order.orderItems" v-bind:key="'count'+burger">
+            {{ burger }}: {{ count }}
+          </div>
+          
+
+          <hr>
         </div>
         <button v-on:click="clearQueue">Clear Queue</button>
       </div>
       <div id="dots">
-          <div v-for="(order, key) in orders" v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}" v-bind:key="'dots' + key">
-            {{ key }}
+        
+         <div v-for="(order, key) in orders" 
+          v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}"
+           v-bind:key="'dots' + key">
+            T
+          </div> 
+          <!-- 
+          <div v-bind:style="{ left: details.x + 'px', 
+                                top: details.y + 'px' }">
+            T
           </div>
+          -->
+          
+         
       </div>
+      orders:,{{ orders }}
     </div>
   </template>
   <script>
@@ -22,7 +46,9 @@
     data: function () {
       return {
         orders: null,
+       
       }
+
     },
     created: function () {
       socket.on('currentQueue', data =>
@@ -48,6 +74,9 @@
     color:black;
     background: rgba(255,255,255, 0.5);
     padding: 1em;
+    width: 400px;
+    height: 800px;
+    overflow: scroll;
   }
   #dots {
     position: relative;

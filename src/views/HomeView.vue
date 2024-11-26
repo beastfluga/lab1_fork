@@ -11,7 +11,7 @@
           <div>
             <h1>Burgers</h1>
             
-            {{ }}    
+             
               
             <section id="burgersection">
              
@@ -19,14 +19,20 @@
               <Burger v-for="burger in burgers"
                       v-bind:burger="burger" 
                       v-bind:key="burger.name"
-                      v-on:orderedBurger="addToOrder($event)"/>
+                      v-on:updatedAmount="addToOrder($event)"/>
                 
             </section>
               
           </div>
           <section id="mapSection">
-            <div id="map" v-on:click="addOrder">
-              click here
+            <div id="map" v-on:click="setLocation">
+              <div class="dot"
+                 v-bind:style="{ left: location.x + 'px', top: location.y + 'px'}">
+                
+                 <span id="hus">🏚️</span>
+                 <span>I live here</span>
+              </div>
+            
             </div>
           </section>  
             <section id="contact">
@@ -50,6 +56,7 @@
                     <p>
                         <label for="lastname">Last name</label><br>
                         <input type="text" id="lastname" v-model="ln" placeholder="Last name">
+                        {{ orderedBurgers }}
                     </p>
                     <p>
                         <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
@@ -61,14 +68,6 @@
                     <p v-if="rcp == 'Credit card (recommended)' || rcp == 'Master card'">
                     <label for="Clearing number">Clearing number</label><br>
                         <input type="text" id="Clearing number" v-model="cn" placeholder="ex: 110085">
-                    </p>
-                    <p>
-                        <label for="street">Street name</label><br>
-                        <input type="text" id="street" v-model="strt" required="required" placeholder="street name">
-                    </p>
-                    <p>
-                        <label for="street number">Street number</label><br>
-                        <input type="number" id="street number" v-model="strnum" required="required" placeholder="street number">
                     </p>
                     <p>
                     Pick a gender <br>
@@ -93,7 +92,7 @@
                    
                 </form>
             </section>
-                <button type="submit" class="button" v-on:click="getInfo(key)">
+                <button type="submit" class="button" v-on:click="sendInfoToServer(key)">
                     <img src="https://www.whitehouse.gov/wp-content/uploads/2021/01/33_harry_s_truman.jpg"
                         style="width: 70px; height: 70px; vertical-align: middle;">
                     Send
@@ -112,7 +111,7 @@
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 import menu from '../assets/menu.json'
-import OneBurger from '../components/OneBurger.vue';
+
 
 const socket = io("localhost:3000");
 //object constructor function
@@ -147,59 +146,89 @@ export default {
       fn: '',
       an: '',
       cn: '',
-      strt: '',
-      strnum: '',
       gender: '',
-      orderedBurgers: '',
+      orderedBurgers: {},
+      location: { x: 0,
+            y: 0
+          },
+      orderInfo : {}
 
 
 
 
     }
   },
+  
   methods: {
     addToOrder: function (event) {
-  this.orderedBurgers[event.name] = event.amount;
+      console.log("event:", event)
+      this.orderedBurgers[event.name] = event.amount;
+    
 },
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
-    addOrder: function (event) {
-     
-      var offset = {x: event.currentTarget.getBoundingClientRect().left,
-                    y: event.currentTarget.getBoundingClientRect().top};
-      socket.emit("addOrder", { orderId: this.getOrderNumber(),
-                                details: { x: event.clientX - 10 - offset.x,
-                                           y: event.clientY - 10 - offset.y },
-                                orderItems: ["Beans", "Curry"]
-                              }
-                 );
-
-                 
-    },
-    getInfo: function() {
+ 
+    sendInfoToServer: function() {
       console.log("method of payment:", this.rcp, "\n",
       "Last name:", this.ln, "\n", 
       "First name:", this.fn, "\n",
       "Account number:", this.an, "\n", 
       "Clearing number:", this.cn, "\n", 
-      "Strret:", this.strt, "\n",
-      "Street number:", this.strnum, "\n",
-      "Gendder:", this.gender)
+      "Gender:", this.gender, "\n",
+      "Email:", this.em
+    ),
+      
+      socket.emit("addOrder", { orderId: this.getOrderNumber(),
+                              details: { x: this.location.x,
+                                         y: this.location.y},
+                              orderItems: this.orderedBurgers,
+                              orderInfo: { "Last Name": this.ln,
+                                           "First name": this.fn,
+                                           "Account number": this.an,
+                                           "clearing Number": this.cn,
+                                           "Gender": this.gender,
+                                           "Email": this.em,
+                                           "Payment method": this.rcp
+                              },
+                              },
+
+                              );
+                              },
+                 
+  
+    setLocation: function(event) {
+      var offset = {x: event.currentTarget.getBoundingClientRect().left,
+                    y: event.currentTarget.getBoundingClientRect().top};
+      this.location = { x: event.clientX -10 - offset.x,
+                        y: event.clientY - 10 - offset.y
+      }
+
     }
+  },
+  
   }
-}
+
+
 
 </script>
 
 <style>
   #mapSection {
-    width: 500px;
-    height: 400px;
+    width: 1000px;
+    height: 800px;
     overflow: scroll;
 
   }
+  .dot {
+    position: absolute;
+    font-size: 22px;
+  }
+  #hus {
+    font-size: 10px;
+  }
   #map {
+    position: relative;
     width: 1920px;
     height: 1078px;
     background: url("/img/polacks.jpg");
