@@ -35,6 +35,7 @@
             
             </div>
           </section>  
+          <p style="color: red;" v-if="adressMissing"><b>Submit your adress my clicking on the map (mandatory)</b></p>
             <section id="contact">
                 <h3>Give us control</h3>
                 <form>
@@ -94,7 +95,7 @@
             </section>
                 <button type="submit" class="button" v-on:click="sendInfoToServer(key)">
                     <img src="https://www.whitehouse.gov/wp-content/uploads/2021/01/33_harry_s_truman.jpg"
-                        style="width: 70px; height: 70px; vertical-align: middle;">
+                        style="width: 70px; height: 70px; vertical-align: middle;" v-bind:class="{'button.no-hover:hover': adressMissing}"> <!-- active hover aktiverar hover med ytterligare villkor -->
                     Send
                 </button>
             </main>
@@ -151,8 +152,8 @@ export default {
       location: { x: 0,
             y: 0
           },
-      orderInfo : {}
-
+      orderInfo : {},
+      adressMissing: false
 
 
 
@@ -177,8 +178,12 @@ export default {
       "Clearing number:", this.cn, "\n", 
       "Gender:", this.gender, "\n",
       "Email:", this.em
-    ),
+    );
+    if(this.location.x == 0 && this.location.y == 0) {
+      this.adressMissing = true;
       
+    }
+    else{
       socket.emit("addOrder", { orderId: this.getOrderNumber(),
                               details: { x: this.location.x,
                                          y: this.location.y},
@@ -191,11 +196,11 @@ export default {
                                            "Email": this.em,
                                            "Payment method": this.rcp
                               },
-                              },
-
-                              );
-                              },
-                 
+                              });
+    }
+     
+                              
+                            },
   
     setLocation: function(event) {
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
@@ -319,6 +324,10 @@ button{
 .button:hover{
     background-color: blueviolet;
     cursor: pointer;
+}
+.button.no-hover:hover {
+  background-color: aliceblue;
+  cursor: default;
 }
 
 section > div{
