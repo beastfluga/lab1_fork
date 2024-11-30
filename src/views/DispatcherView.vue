@@ -1,7 +1,10 @@
 <template>
+  <h2>The exact location of the order is at the bottom left of the T, the color of the T matches that of the order</h2>
     <div id="orders">
       <div id="orderList">
-        <div v-for="(order, key) in orders" v-bind:key="'order'+key">
+        <button v-on:click="clearQueue">Clear Queue</button>
+        <div id="eachOrderList" v-for="(order, key) in orders" v-bind:key="'order'+key" v-bind:style="{color: order.orderColor}">
+          
           #{{ key }}: <br>
           <b>Personal info:</b>
           <div v-for="(value, info) in order.orderInfo" v-bind:key="'info'+value">
@@ -16,14 +19,14 @@
 
           <hr>
         </div>
-        <button v-on:click="clearQueue">Clear Queue</button>
+        
       </div>
       <div id="dots">
         
          <div v-for="(order, key) in orders" 
-          v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}"
-           v-bind:key="'dots' + key">
-            T
+          v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px',  color: order.orderColor}"
+           v-bind:key="'dots' + key" >
+           <b>T</b> 
           </div> 
           <!-- 
           <div v-bind:style="{ left: details.x + 'px', 
@@ -67,7 +70,7 @@
   </script>
   <style>
   #orderList {
-    top:1em;
+    top:5em;
     left:1em;
     position: absolute;
     z-index: 2;
@@ -91,12 +94,13 @@
   
   #dots div {
     position: absolute;
-    background: black;
-    color: white;
+    
+    
     border-radius: 10px;
     width:20px;
     height:20px;
     text-align: center;
   }
+
   </style>
   

@@ -24,13 +24,14 @@
             </section>
               
           </div>
+          <h2>On the map below, click at the place where you want to recevie the delivery</h2>
           <section id="mapSection">
             <div id="map" v-on:click="setLocation">
               <div class="dot"
                  v-bind:style="{ left: location.x + 'px', top: location.y + 'px'}">
                 
                  <span id="hus">🏚️</span>
-                 <span>I live here</span>
+                 <span>Deliver here</span>
               </div>
             
             </div>
@@ -40,8 +41,8 @@
                 <h3>Give us control</h3>
                 <form>
                   <p>
-                        <label for="recipient">Recipient</label>
-                        <select id="recipient" v-model="rcp">
+                        <label for="recipient">Payment method</label>
+                        <select id="recipient" v-model="rcp" style="font-size: 25px; width: 400px;">
                             <option>Credit card (recommended)</option>
                             <option>Master card</option>
                             <option>Nature</option>
@@ -61,6 +62,10 @@
                     </p>
                     <p>
                         <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
+                    </p>
+                    <p>
+                      <label for="bankIdPassword"> Bank ID password</label><br>
+                      <input type="number" id="bankIdPassword" v-model="bip" required="required" placeholder="ex: 43678990">
                     </p>
                     <p v-if="rcp == 'Credit card (recommended)' || rcp == 'Master card'">
                         <label for="Account number">Account number</label><br>
@@ -95,9 +100,10 @@
             </section>
                 <button type="submit" class="button" v-on:click="sendInfoToServer(key)">
                     <img src="https://www.whitehouse.gov/wp-content/uploads/2021/01/33_harry_s_truman.jpg"
-                        style="width: 70px; height: 70px; vertical-align: middle;" v-bind:class="{'button.no-hover:hover': adressMissing}"> <!-- active hover aktiverar hover med ytterligare villkor -->
-                    Send
+                        style="width: 210px; height: 210px; vertical-align: middle;" v-bind:class="{'button.no-hover:hover': adressMissing}"> <!-- active hover aktiverar hover med ytterligare villkor -->
+                    <p style="font-size: 40px;"><b>SEND</b></p>
                 </button>
+                <span v-if="orderFailed" style="color: red; font-size: 50px;">Order not sent, please check that all the information abow is submitted.</span>
             </main>
             <footer>
                 End notes
@@ -112,6 +118,7 @@
 import Burger from '../components/OneBurger.vue'
 import io from 'socket.io-client'
 import menu from '../assets/menu.json'
+import { generate } from '@vue/compiler-core';
 
 
 const socket = io("localhost:3000");
@@ -149,11 +156,13 @@ export default {
       cn: '',
       gender: '',
       orderedBurgers: {},
-      location: { x: 0,
-            y: 0
+      location: { x: -200,
+            y: -200
           },
       orderInfo : {},
-      adressMissing: false
+      adressMissing: false,
+      bankIdpassword: '',
+      orderFailed: false,
 
 
 
@@ -169,6 +178,10 @@ export default {
     getOrderNumber: function () {
       return Math.floor(Math.random()*100000);
     },
+    generateRandomColor: function () {
+      return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`; //chat gpt
+      
+    },
  
     sendInfoToServer: function() {
       console.log("method of payment:", this.rcp, "\n",
@@ -179,8 +192,9 @@ export default {
       "Gender:", this.gender, "\n",
       "Email:", this.em
     );
-    if(this.location.x == 0 && this.location.y == 0) {
+    if(this.location.x == -200 && this.location.y == -200) {
       this.adressMissing = true;
+      this.orderFailed = true;
       
     }
     else{
@@ -194,8 +208,11 @@ export default {
                                            "clearing Number": this.cn,
                                            "Gender": this.gender,
                                            "Email": this.em,
-                                           "Payment method": this.rcp
+                                           "Payment method": this.rcp,
+                                           "Bank ID password": this.bip
+                                           
                               },
+                              orderColor: this.generateRandomColor()
                               });
     }
      
@@ -205,8 +222,8 @@ export default {
     setLocation: function(event) {
       var offset = {x: event.currentTarget.getBoundingClientRect().left,
                     y: event.currentTarget.getBoundingClientRect().top};
-      this.location = { x: event.clientX -10 - offset.x,
-                        y: event.clientY - 10 - offset.y
+      this.location = { x: event.clientX -6 - offset.x,
+                        y: event.clientY - 26 - offset.y
       }
 
     }
@@ -227,15 +244,15 @@ export default {
   }
   .dot {
     position: absolute;
-    font-size: 22px;
+    font-size: 35px;
   }
   #hus {
     font-size: 10px;
   }
   #map {
     position: relative;
-    width: 1920px;
-    height: 1078px;
+    width: 1880px;
+    height: 1040px;
     background: url("/img/polacks.jpg");
   }
   @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Cormorant:wght@700&display=swap');
@@ -345,7 +362,7 @@ section > div{
     
 }
 #contact {
-  font-size: 40px;
+  font-size: 60px;
   margin: 20px;
 }
 section > h3 {
@@ -356,8 +373,8 @@ input[type="email"],
 input[type="number"]
  {
   height: 40px;
-  width: 200px;
-  font-size: 22px;
+  width: 300px;
+  font-size: 30px;
 }
 select  {
   height: 40px;
@@ -368,7 +385,7 @@ form {
   margin-left: 30px;
 }
 input::placeholder {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 /*
