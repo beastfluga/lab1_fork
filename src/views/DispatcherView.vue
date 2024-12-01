@@ -28,12 +28,6 @@
            v-bind:key="'dots' + key" >
            <b>T</b> 
           </div> 
-          <!-- 
-          <div v-bind:style="{ left: details.x + 'px', 
-                                top: details.y + 'px' }">
-            T
-          </div>
-          -->
           
          
       </div>
@@ -71,7 +65,7 @@
   <style>
   #orderList {
     top:5em;
-    left:1em;
+    left:73em;
     position: absolute;
     z-index: 2;
     color:black;

@@ -36,7 +36,7 @@
             
             </div>
           </section>  
-          <p style="color: red;" v-if="adressMissing"><b>Submit your adress my clicking on the map (mandatory)</b></p>
+          <p style="color: red;" v-if="adressMissing"><b>* Submit your adress by clicking on the map (mandatory)</b></p>
             <section id="contact">
                 <h3>Give us control</h3>
                 <form>
@@ -103,7 +103,7 @@
                         style="width: 210px; height: 210px; vertical-align: middle;" v-bind:class="{'button.no-hover:hover': adressMissing}"> <!-- active hover aktiverar hover med ytterligare villkor -->
                     <p style="font-size: 40px;"><b>SEND</b></p>
                 </button>
-                <span v-if="orderFailed" style="color: red; font-size: 50px;">Order not sent, please check that all the information abow is submitted.</span>
+                <span v-if="orderFailed" style="color: red; font-size: 50px;">Order not sent, please make sure you have chosen a location for your delivery.</span>
             </main>
             <footer>
                 End notes
