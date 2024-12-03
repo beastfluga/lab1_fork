@@ -58,7 +58,7 @@
                     <p>
                         <label for="lastname">Last name</label><br>
                         <input type="text" id="lastname" v-model="ln" placeholder="Last name">
-                        {{ orderedBurgers }}
+                        
                     </p>
                     <p>
                         <input type="email" id="email" v-model="em" required="required" placeholder="E-mail address">
@@ -94,7 +94,7 @@
                          None of your business
                     </label></br>
                     </p>
-                    Todays worst customer: {{this.fn}}!
+                    <p></p>Todays best customer: {{this.fn}}!
                    
                 </form>
             </section>
